@@ -7,19 +7,35 @@
 	/* DriverManager creating connection object, didn't put it into try block but you can do so. Format 
 	    for connection string is {jdbc:oracle:thin:@[ipaddress or hostname]:oracle_sid" , 
 	    "user_name",""password"}. */
+        try {
+            Class.forName ("oracle.jdbc.OracleDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+	    
+	String connStrHome 	= "jdbc:oracle:thin:@192.168.189.128:1521:cdb1";
+ 	String userNameHome		= "c##fnapp";
+	String pwdHome			 	= "fnapp";
+	    
+	String connStrWork 	= "jdbc:oracle:thin:@SINSA1100332.SG.NET.INTRA:1521:SINFND2";
+	String userNameWork		= "FNAPP";
+	String pwdWork 			 	= "fnapp";
+	
+	
+	Connection conn = DriverManager.getConnection(connStrWork, userNameWork, pwdWork);
 
-	Connection conn = DriverManager.getConnection(
-			"jdbc:oracle:thin:@192.168.189.128:1521:cdb1", "c##fnapp", "fnapp");
 	/* request.getParameter reads from post object sqlStr which is actually an input element in the 
 	     html  page consisting of the sql statement */
-    String sqlStr = "SELECT T.OWNER, T.TABLE_NAME FROM ALL_TABLES T WHERE t.owner = 'C##FNAPP' order by t.table_name;";
-	String sql = request.getParameter(sqlStr);
-
+	String sqlStr = "SELECT T.OWNER, T.TABLE_NAME FROM ALL_TABLES T WHERE t.owner = '"+userNameWork+"' order by t.table_name";
+	System.out.println("sqlStr=["+sqlStr+ "]");
+/* 	String sql = request.getParameter("SELECT T.OWNER, T.TABLE_NAME FROM ALL_TABLES T WHERE t.owner = 'FNAPP' order by t.table_name;");
+	System.out.println("sql=["+sql+ "]");
+ */
 	try {
 		/* Statement object  need to parse sql statement and return the cursor */
 		Statement stmt = conn.createStatement();
 		/* Resultset (recordset) object  used to create cursor object */
-		ResultSet rs = stmt.executeQuery(sql);
+		ResultSet rs = stmt.executeQuery(sqlStr);
 		/* ResultSetMetaData object is used to retrieve column name and table name and number of 
 		    columns from parse recordset object using getMetaData function. Since we are attempting to 
 		    make table columns dynamic and not be hard coded that's why we are using metadata. */
@@ -63,6 +79,7 @@
 
 	} catch (SQLException e) {
 		out.println("SQL Error encountered " + e.getMessage());
+		System.out.println(e.getMessage());
 	}
 	conn.close();
 	conn = null;
