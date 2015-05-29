@@ -1,0 +1,22 @@
+<html ng-app="app">
+<HEAD>
+	<meta charset="utf-8">
+	<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+	<script src= "../app/app.js"></script>
+</HEAD>
+
+<body ng-controller="MyCtrl">
+	<div>Search : <input type="text" value="" ng-model="SearchField" name="SearchField" /><br></div>
+	
+	<table border=1>
+	   <tr>
+	        <th><a href="" ng-click="sortField = 'OWNER'; reverse=!reverse">Table Owner</a></th>
+	        <th><a href="" ng-click="sortField = 'TABLE_NAME'; reverse=!reverse">Table Name</a></th>
+	    </tr>		
+	    <tr ng-repeat="data in empData  | filter:SearchField | orderBy:sortField:reverse">
+				<td>{{data.OWNER}}</td>
+				<td>{{data.TABLE_NAME}}</td>
+		</tr>
+	</table>
+</body>
+</html>
