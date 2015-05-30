@@ -1,31 +1,24 @@
 app = angular.module('app', [ 'ngMaterial', 'ngMessages', 'ngRoute' ]);
 
-app.controller('MyCtrl', function($scope, $http) {
+app.controller('oracleDbMonitorController', function($scope, $http, $log) {
 
-	$http.get("../views/get_oracle_data.jsp").success(function(response) {
-
-		$scope.empData = response;
-		$scope.reverse = true;
-
-	}).error(function() {
-	});
+	$scope.mySqlStr="";
 	
-	$scope.user = {
-			title : 'Developer',
-			email : 'nickwang1980@gmail.com',
-			firstName : '',
-			lastName : '',
-			company : 'Google',
-			address : '1600 Amphitheatre Pkwy',
-			city : 'Mountain View',
-			state : 'CA',
-			biography : 'Loves kittens, snowboarding, and can type at 130 WPM.\n\nAnd rumor has it she bouldered up Castle Craig!',
-			postalCode : '94043'
-		};
-
-}).config(
-		function($mdThemingProvider) {
-			// Configure a dark theme with primary foreground yellow
-			$mdThemingProvider.theme('docs-dark', 'default')
-					.primaryPalette('yellow').dark();
+//	$log.info("$scope.mySqlStr=[" + $scope.mySqlStr + "]");
+	
+	$scope.dbQuerySubmit = function() {
+		$http.get("../dbAccess/get_oracle_data.jsp?sqlStr="+ $scope.mySqlStr).success(function(response) {
+			$scope.empData = response;
+			$scope.reverse = true;
+		}).error(function() {
 		});
+	};
+	
+	$scope.clearSqlStr= function() {
+		$scope.mySqlStr="";
+	}
+	
+	$scope.clearResult= function() {
+		$scope.empData="";
+	}
+});

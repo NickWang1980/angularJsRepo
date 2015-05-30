@@ -1,0 +1,51 @@
+<html ng-app="app">
+<HEAD>
+<meta charset="utf-8">
+
+<!-- Angular Material Dependencies -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-messages.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+<!-- Angular Material -->
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.css">
+<!-- Bootstrap -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<!-- my angular js files --> 
+<script src="../app/app.js"></script>
+
+</HEAD>
+
+<BODY ng-controller="oracleDbMonitorController">
+	<md-input-container flex>
+		<label>Input your SQL here</label>
+		<input ng-model="mySqlStr" type="text" >
+	</md-input-container>
+	<div>
+		<md-button class="md-raised" ng-click="dbQuerySubmit()">Search</md-button>
+		<md-button class="md-raised" ng-click="clearSqlStr()">Clear SQL</md-button>
+		<md-button class="md-raised" ng-click="clearResult()">Clear Result</md-button>
+	</div>
+	<md-input-container flex>
+		<label>What do you want to search</label>
+		<input ng-model="SearchField" name="SearchField">
+	</md-input-container>
+	
+	<table class="table" border="1">
+		<tr class="info">
+			<th><a href="" ng-click="sortField = 'USER_ID'; reverse=!reverse">USER_ID</a></th>
+			<th><a href="" ng-click="sortField = 'USERNAME'; reverse=!reverse">USERNAME</a></th>
+		</tr>
+		<tr class="success" ng-repeat="data in empData  | filter:SearchField | orderBy:sortField:reverse">
+			<td>{{data.USER_ID}}</td>
+			<td>{{data.USERNAME}}</td>
+		</tr>
+	</table>
+	
+
+</BODY>
+</html>
