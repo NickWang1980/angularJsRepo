@@ -1,15 +1,6 @@
-app = angular.module('app', [ 'ngMaterial', 'ngMessages', 'ngRoute' ]);
+app = angular.module('appNgMaterials', [ 'ngMaterial', 'ngMessages', 'ngRoute' ]);
 
-app.controller('MyCtrl', function($scope, $http) {
-
-	$http.get("../views/get_oracle_data.jsp").success(function(response) {
-
-		$scope.empData = response;
-		$scope.reverse = true;
-
-	}).error(function() {
-	});
-	
+app.controller('ngMaterialsCtrl', function($scope, $http) {
 	$scope.user = {
 			title : 'Developer',
 			email : 'nickwang1980@gmail.com',

@@ -22,11 +22,14 @@
 	String pwdWork 			 	= "fnapp";
 	
 	
-	Connection conn = DriverManager.getConnection(connStrWork, userNameWork, pwdWork);
+	Connection conn = DriverManager.getConnection(connStrHome, userNameHome, pwdHome);
 
 	/* request.getParameter reads from post object sqlStr which is actually an input element in the 
 	     html  page consisting of the sql statement */
-	String sqlStr = "SELECT T.OWNER, T.TABLE_NAME FROM ALL_TABLES T WHERE t.owner = '"+userNameWork+"' order by t.table_name";
+	/* String sqlStr = "SELECT T.OWNER, T.TABLE_NAME FROM ALL_TABLES T WHERE t.owner = 'C##FNAPP' order by t.table_name"; */
+	String sqlCount = "SELECT COUNT(1) FROM ALL_TABLES T where owner not in ( 'SYS', 'SYSTEM')";
+	String sqlStr = "SELECT T.OWNER, T.TABLE_NAME FROM ALL_TABLES T where owner not in ( 'SYS', 'SYSTEM')";
+	
 	System.out.println("sqlStr=["+sqlStr+ "]");
 /* 	String sql = request.getParameter("SELECT T.OWNER, T.TABLE_NAME FROM ALL_TABLES T WHERE t.owner = 'FNAPP' order by t.table_name;");
 	System.out.println("sql=["+sql+ "]");
